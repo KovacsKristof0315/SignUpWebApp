@@ -19,15 +19,19 @@ const priceInputvalue =
 
 
 mentElement.addEventListener("click", () => {
+    uploadNyitasData(nameElement.value, priceInputvalue[0].value, priceInputvalue[1].value);
+    TablaFeltolt(nameElement.value, priceInputvalue[0].value, priceInputvalue[1].value)
+})
 
+function TablaFeltolt(name, start, end) {
     let tr = document.createElement("tr");
 
     let nametd = document.createElement("td");
-    nametd.innerText = nameElement.value;
+    nametd.innerText = name;
     tr.appendChild(nametd);
     for (let i = 14; i < 22; i++) {
         let td = document.createElement("td");
-        if (i <= priceInputvalue[1].value && i >= priceInputvalue[0].value) {
+        if (i <= end && i >= start) {
             td.classList.add("marked");
             
         }
@@ -44,14 +48,63 @@ mentElement.addEventListener("click", () => {
     deleteButton.addEventListener("click", () =>
     {
         tableElement.removeChild(tr);
+        deleteNyitasData(name);
     })
 
     td.appendChild(deleteButton);
 
     tr.appendChild(td);
     tableElement.appendChild(tr);
-})
+}
 
+async function getNyitasData()
+{
+
+    try 
+    {
+        let results = await fetch('./php/index.php/getNyitasData')
+        datas = await results.json();
+
+        for (const item in datas) {
+            TablaFeltolt(datas[item].name, datas[item].start, datas[item].end);
+            
+        }
+    } 
+    catch (error) 
+    {
+        console.log(error);       
+    }
+}
+
+async function uploadNyitasData(name, start, end)
+{
+    try 
+    {
+        let datas = { "name" : name, "start" : start, "end" : end }
+        let eredmeny = await fetch('./php/index.php/uploadNyitasData', {method: 'POST', body: JSON.stringify(datas)});
+        let adatok = await eredmeny.json();
+        console.log(adatok);
+    } 
+    catch (error) 
+    {
+      console.log(error);  
+    }
+}
+
+async function deleteNyitasData(name)
+{
+    try 
+    {
+        let datas = { "name" : name }
+        let eredmeny = await fetch('./php/index.php/deleteNyitasData', {method: 'POST', body: JSON.stringify(datas)});
+        let adatok = await eredmeny.json();
+        console.log(adatok);
+    } 
+    catch (error) 
+    {
+      console.log(error);  
+    }
+}
 
 //bevás
 
@@ -62,14 +115,27 @@ for (let i = 0; i < bevasNameButtons.length; i++) {
         bevasNameFix[i].innerText = bevasNames[i].value;
         bevasNames[i].style.display="none";
         bevasNameButtons[i].style.display="none";
-        
+        uploadBevas(bevasNames[i].value);
     })
     
+}
+async function uploadBevas(name) {
+    try 
+    {
+        let datas = { "name" : name }
+        let eredmeny = await fetch('./php/index.php/uploadBevas', {method: 'POST', body: JSON.stringify(datas)});
+  
+    } 
+    catch (error) 
+    {
+      console.log(error);  
+    }
 }
 
 for (let i = 0; i < bevasNameFix.length; i++) {
     bevasNameFix[i].addEventListener("click", () => {
         bevasNameFix[i].style.display = "none";
+        deleteBevas(bevasNames[i].value);
         bevasNameFix[i].innerText = "";
         
         bevasNames[i].value="";
@@ -78,3 +144,46 @@ for (let i = 0; i < bevasNameFix.length; i++) {
     })
     
 }
+
+async function deleteBevas(name) {
+    try 
+    {
+        let datas = { "name" : name }
+        let eredmeny = await fetch('./php/index.php/deleteBevas', {method: 'POST', body: JSON.stringify(datas)});
+  
+    } 
+    catch (error) 
+    {
+      console.log(error);  
+    }
+}
+
+async function getBevas() {
+    try 
+    {
+        let results = await fetch('./php/index.php/getBevas')
+        datas = await results.json();
+        console.log(datas);
+        let i=0;
+        for (const item in datas) {
+            bevasNameFix[i].style.display = "inline";
+            bevasNameFix[i].innerText = datas[item].name;
+            bevasNames[i].style.display="none";
+            bevasNameButtons[i].style.display="none";
+            bevasNameFix[i].addEventListener("click", () =>
+            {
+                deleteBevas(datas[item].name);
+            })
+            i++;
+        }
+    } 
+    catch (error) 
+    {
+        console.log(error);       
+    }
+}
+window.addEventListener("load", () => {
+    getNyitasData();
+    getBevas();
+})
+
