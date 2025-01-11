@@ -36,6 +36,18 @@ class Route {
                 $getBevas = new Function_bolyai();
                 echo $getBevas->getBevas($this->erkezettAdatok);
                 break;
+            case 'uploadTakker':
+                $uploadTakker = new Function_bolyai();
+                echo $uploadTakker->uploadTakker($this->erkezettAdatok);
+                break;
+            case 'deleteTakker':
+                $deleteTakker = new Function_bolyai();
+                echo $deleteTakker->deleteTakker($this->erkezettAdatok);
+                break;
+            case 'getTakker':
+                $getTakker = new Function_bolyai();
+                echo $getTakker->getTakker($this->erkezettAdatok);
+                break;
             case 'deleteNyitasData':
                 $deleteNyitasData = new Function_bolyai();
                 echo $deleteNyitasData->deleteNyitasData($this->erkezettAdatok);

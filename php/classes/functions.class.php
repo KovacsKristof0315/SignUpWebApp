@@ -27,6 +27,16 @@ class Function_bolyai
         return json_encode($BevasStorage, JSON_UNESCAPED_UNICODE);
     }
 
+    public function getTakker()
+    {
+        $TakkerStorage = new Storage(new JsonIO('takker.json'), false);
+
+      
+        $TakkerStorage = $TakkerStorage->findAll();
+        
+        return json_encode($TakkerStorage, JSON_UNESCAPED_UNICODE);
+    }
+
 
     public function uploadNyitasData($erkezettAdatok)
     {
@@ -64,6 +74,23 @@ class Function_bolyai
 
         
         $BevasStorage->add([
+            "name" => $erkezettAdatok->name,
+        ]);
+    }
+
+    public function deleteTakker($erkezettAdatok)
+    {
+        $TakkerStorage = new Storage(new JsonIO('takker.json'), false);
+
+        $TakkerStorage->delete($erkezettAdatok->name);
+    }
+
+    public function uploadTakker($erkezettAdatok)
+    {
+        $TakkerStorage = new Storage(new JsonIO('takker.json'), false);
+
+        
+        $TakkerStorage->add([
             "name" => $erkezettAdatok->name,
         ]);
     }

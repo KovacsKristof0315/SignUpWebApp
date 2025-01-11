@@ -7,6 +7,10 @@ const bevasNames = document.querySelectorAll(".bevasName");
 const bevasNameButtons = document.querySelectorAll(".bevasNameButton");
 const bevasNameFix = document.querySelectorAll(".bevasNameFix");
 
+const takkerNames = document.querySelectorAll(".takkerName");
+const takkerNameButtons = document.querySelectorAll(".takkerNameButton");
+const takkerNameFix = document.querySelectorAll(".takkerNameFix");
+
 const rangevalue = 
     document.querySelector(".slider-container .price-slider");
 const rangeInputvalue = 
@@ -182,8 +186,87 @@ async function getBevas() {
         console.log(error);       
     }
 }
+
+// takker
+
+for (let i = 0; i < takkerNameButtons.length; i++) {
+    takkerNameFix[i].style.display = "none";
+    takkerNameButtons[i].addEventListener("click", () => {
+        takkerNameFix[i].style.display = "inline";
+        takkerNameFix[i].innerText = takkerNames[i].value;
+        takkerNames[i].style.display="none";
+        takkerNameButtons[i].style.display="none";
+        uploadTakker(takkerNames[i].value);
+    })
+    
+}
+async function uploadTakker(name) {
+    try 
+    {
+        let datas = { "name" : name }
+        let eredmeny = await fetch('./php/index.php/uploadTakker', {method: 'POST', body: JSON.stringify(datas)});
+  
+    } 
+    catch (error) 
+    {
+      console.log(error);  
+    }
+}
+
+for (let i = 0; i < takkerNameFix.length; i++) {
+    takkerNameFix[i].addEventListener("click", () => {
+        takkerNameFix[i].style.display = "none";
+        deleteBevas(takkerNames[i].value);
+        takkerNameFix[i].innerText = "";
+        
+        takkerNames[i].value="";
+        takkerNames[i].style.display="inline";
+        takkerNameButtons[i].style.display="inline";
+    })
+    
+}
+
+async function deleteTakker(name) {
+    try 
+    {
+        let datas = { "name" : name }
+        let eredmeny = await fetch('./php/index.php/deleteTakker', {method: 'POST', body: JSON.stringify(datas)});
+  
+    } 
+    catch (error) 
+    {
+      console.log(error);  
+    }
+}
+
+async function getTakker() {
+    try 
+    {
+        let results = await fetch('./php/index.php/getTakker')
+        datas = await results.json();
+        console.log(datas);
+        let i=0;
+        for (const item in datas) {
+            takkerNameFix[i].style.display = "inline";
+            takkerNameFix[i].innerText = datas[item].name;
+            takkerNames[i].style.display="none";
+            takkerNameButtons[i].style.display="none";
+            takkerNameFix[i].addEventListener("click", () =>
+            {
+                deleteTakker(datas[item].name);
+            })
+            i++;
+        }
+    } 
+    catch (error) 
+    {
+        console.log(error);       
+    }
+}
+
 window.addEventListener("load", () => {
     getNyitasData();
     getBevas();
+    getTakker();
 })
 
