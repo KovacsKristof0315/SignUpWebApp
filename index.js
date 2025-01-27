@@ -47,6 +47,7 @@ function TablaFeltolt(name, start, end) {
     
     let deleteButton = document.createElement("input");
     deleteButton.type = "button";
+    deleteButton.className = "btn btn-danger"
     deleteButton.value = "X";
 
     deleteButton.addEventListener("click", () =>
