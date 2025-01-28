@@ -20,6 +20,10 @@ class Route {
                 $getNyitasData = new Function_bolyai();
                 echo $getNyitasData->getNyitasData();
                 break;
+            case 'deleteAllData':
+                $deleteAllData = new Function_bolyai();
+                echo $deleteAllData->deleteAllData();
+                break;
             case 'uploadNyitasData':
                 $uploadNyitasData = new Function_bolyai();
                 echo $uploadNyitasData->uploadNyitasData($this->erkezettAdatok);
@@ -28,13 +32,25 @@ class Route {
                 $uploadBevas = new Function_bolyai();
                 echo $uploadBevas->uploadBevas($this->erkezettAdatok);
                 break;
+            case 'uploadKifli':
+                $uploadKifli = new Function_bolyai();
+                echo $uploadKifli->uploadKifli($this->erkezettAdatok);
+                break;
             case 'deleteBevas':
                 $deleteBevas = new Function_bolyai();
                 echo $deleteBevas->deleteBevas($this->erkezettAdatok);
                 break;
+            case 'deleteKifli':
+                $deleteKifli = new Function_bolyai();
+                echo $deleteKifli->deleteKifli($this->erkezettAdatok);
+                break;
             case 'getBevas':
                 $getBevas = new Function_bolyai();
                 echo $getBevas->getBevas($this->erkezettAdatok);
+                break;
+            case 'getKifli':
+                $getKifli = new Function_bolyai();
+                echo $getKifli->getKifli($this->erkezettAdatok);
                 break;
             case 'uploadTakker':
                 $uploadTakker = new Function_bolyai();

@@ -10,13 +10,12 @@
 <body class="bg-light">
     <div class="container-fluid my-5">
         <form action="">
-            <h1 class="text-center mb-4">Nyitás</h1>
+            <h1 class="text-center mb-4" id="nyTitle">Nyitás</h1>
 
             <!-- Name Input -->
             <div class="row g-4">
                 <div class="col-md-4">
-                    <label for="nev" class="form-label">Név</label>
-                    <input type="text" id="nev" class="form-control" placeholder="Adja meg a nevét">
+                    <input type="text" id="nev" class="form-control mt-4 purple-shadow" placeholder="Adja meg a nevét">
                 </div>
 
                 <!-- Range Slider Section -->
@@ -87,25 +86,48 @@
 
                 <!-- Submit Button -->
                 <div class="col-md-2 d-flex align-items-end">
-                    <button type="button" id="ment" class="btn btn-primary w-100">Ment</button>
+                    <button type="button" id="ment" class="btn mentButton w-100">Mentés</button>
+                </div>
+                <!--Info button-->
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="button" class="btn infoBtn w-100" id="info">Mikor menjek?</button>
                 </div>
             </div>
 
+            <!--Dialog/Modal info elem-->
+            <dialog class="DialogModal">
+                <button autofocus type="button" class="btn btn-danger mb-2 float-end fw-bolder">X</button>
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Óra</th>
+                            <th>Megjegyzés</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyModal">
+                    
+                </tbody>
+            </table>
+            </dialog>
+            
+            
             <!-- Table Section -->
             <div class="table-responsive my-5">
                 <table class="table table-striped table-bordered">
                     <thead class="table-dark">
                         <tr>
-                            <th>Név</th>
-                            <th>14:00</th>
-                            <th>15:00</th>
-                            <th>16:00</th>
-                            <th>17:00</th>
-                            <th>18:00</th>
-                            <th>19:00</th>
-                            <th>20:00</th>
-                            <th>21:00</th>
-                            <th>X</th>
+                            <th class="text-center">Név</th>
+                            <th class="text-center">14:00</th>
+                            <th class="text-center">15:00</th>
+                            <th class="text-center">16:00</th>
+                            <th class="text-center">17:00</th>
+                            <th class="text-center">18:00</th>
+                            <th class="text-center">19:00</th>
+                            <th class="text-center">20:00</th>
+                            <th class="text-center">21:00</th>
+                            <th class="text-center">
+                                <img src="Icons/trash-can-svgrepo-com.svg" alt="Trash can" title="Trash can" class="img-fluid">
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="tbody">
@@ -114,7 +136,7 @@
                 </table>
             </div>
 
-
+            
 
             <!-- Bevás Section -->
             <hr>
@@ -124,30 +146,91 @@
             <div class="row g-4">
                 <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <label class="bevasNameFix"></label>
-                        <input type="text" class="form-control me-2 bevasName" placeholder="Bevás név">
-                        <button type="button" id="hozza" class="btn btn-success bevasNameButton">$</button>
+                        <div class="text-center w-100 bevasNameFix align-middle">
+                   
+                        </div>
+                       
+                        <input type="text" class="form-control me-2 bevasName purple-shadow" placeholder="Bevás név">
+                        <button type="button" id="hozza" class="btn btn-success bevasNameButton buttonBTK">
+                            <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <label class="bevasNameFix"></label>
-                        <input type="text" class="form-control me-2 bevasName" placeholder="Bevás név">
-                        <button type="button" id="hozza" class="btn btn-success bevasNameButton">$</button>
+                        <div class="text-center w-100 bevasNameFix align-middle">
+                   
+                        </div>
+                        <input type="text" class="form-control me-2 bevasName purple-shadow" placeholder="Bevás név">
+                        <button type="button" id="hozza" class="btn btn-success bevasNameButton">
+                            <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <label class="bevasNameFix"></label>
-                        <input type="text" class="form-control me-2 bevasName" placeholder="Bevás név">
-                        <button type="button" id="hozza" class="btn btn-success bevasNameButton">$</button>
+                        <div class="text-center w-100 bevasNameFix align-middle"></div>
+                        <input type="text" class="form-control me-2 bevasName purple-shadow" placeholder="Bevás név">
+                        <button type="button" id="hozza" class="btn btn-success bevasNameButton">
+                            <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <label class="bevasNameFix"></label>
-                        <input type="text" class="form-control me-2 bevasName" placeholder="Bevás név">
-                        <button type="button" id="hozza" class="btn btn-success bevasNameButton">$</button>
+                        <div class="text-center w-100 bevasNameFix align-middle"></div>
+                        <input type="text" class="form-control me-2 bevasName purple-shadow" placeholder="Bevás név">
+                        <button type="button" id="hozza" class="btn btn-success bevasNameButton">
+                            <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- Kifli Section -->
+            <div id="kifli">
+
+                <hr>
+    
+                <h2 class="text-center mb-4" id="kifliTitle">Kifli</h2>
+    
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="text-center w-100 kifliNameFix align-middle"></div>
+                            <input type="text" class="form-control me-2 kifliName purple-shadow" placeholder="Kifli név">
+                            <button type="button" id="hozza" class="btn btn-success kifliNameButton">
+                                <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="text-center w-100 kifliNameFix align-middle"></div>
+                            <input type="text" class="form-control me-2 kifliName purple-shadow" placeholder="Kifli név">
+                            <button type="button" id="hozza" class="btn btn-success kifliNameButton">
+                                <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="text-center w-100 kifliNameFix align-middle"></div>
+                            <input type="text" class="form-control me-2 kifliName purple-shadow" placeholder="Kifli név">
+                            <button type="button" id="hozza" class="btn btn-success kifliNameButton">
+                                <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <div class="text-center w-100 kifliNameFix align-middle"></div>
+                            <input type="text" class="form-control me-2 kifliName purple-shadow" placeholder="Kifli név">
+                            <button type="button" id="hozza" class="btn btn-success kifliNameButton">
+                                <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -160,36 +243,56 @@
             <div class="row g-4">
                 <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <label class="takkerNameFix"></label>
-                        <input type="text" class="form-control me-2 takkerName" placeholder="Takker név">
-                        <button type="button" id="hozza" class="btn btn-success takkerNameButton">$</button>
+                        <div class="text-center w-100 takkerNameFix align-middle"></div>
+                        <input type="text" class="form-control me-2 takkerName purple-shadow" placeholder="Takker név">
+                        <button type="button" id="hozza" class="btn btn-success takkerNameButton">
+                            <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <label class="takkerNameFix"></label>
-                        <input type="text" class="form-control me-2 takkerName" placeholder="Takker név">
-                        <button type="button" id="hozza" class="btn btn-success takkerNameButton">$</button>
+                        <div class="text-center w-100 takkerNameFix align-middle"></div>
+                        <input type="text" class="form-control me-2 takkerName purple-shadow" placeholder="Takker név">
+                        <button type="button" id="hozza" class="btn btn-success takkerNameButton">
+                            <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <label class="takkerNameFix"></label>
-                        <input type="text" class="form-control me-2 takkerName" placeholder="Takker név">
-                        <button type="button" id="hozza" class="btn btn-success takkerNameButton">$</button>
+                        <div class="text-center w-100 takkerNameFix align-middle"></div>
+                        <input type="text" class="form-control me-2 takkerName purple-shadow" placeholder="Takker név">
+                        <button type="button" id="hozza" class="btn btn-success takkerNameButton">
+                            <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="d-flex align-items-center">
-                        <label class="takkerNameFix"></label>
-                        <input type="text" class="form-control me-2 takkerName" placeholder="Takker név">
-                        <button type="button" id="hozza" class="btn btn-success takkerNameButton">$</button>
+                        <div class="text-center w-100 takkerNameFix align-middle"></div>
+                        <input type="text" class="form-control me-2 takkerName purple-shadow" placeholder="Takker név">
+                        <button type="button" id="hozza" class="btn btn-success takkerNameButton">
+                            <img src="Icons/check-mark-svgrepo-com.svg" alt="Check mark" title="Check mark" class="img-fluid">
+                        </button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 
+    <footer class="bg-light text-center text-lg-start">
+        <div class="text-center p-3">
+            <h6>
+                Készítették: Kovács Kristóf(Kenyér) és Császár Péter <br> @BolyaiClub
+            </h6>
+        </div>
+    </footer>
+
+    <!--Response-->
+    <div id="toast" class="toast">Sikeres adatrögzítés!</div>
+    <script src="NyitasLista.js" defer></script>
+    <script src="Datas.js" defer></script>
     <script src="index.js" defer></script>
     <script src="slider.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

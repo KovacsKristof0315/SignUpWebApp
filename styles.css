@@ -138,6 +138,9 @@ input[type="range"]::-webkit-slider-thumb {
     .price-field {
         margin-bottom: 10px;
     }
+    .DialogModal {
+        max-width: 80% !important;
+    }
 }
 
 .marks {
@@ -163,6 +166,11 @@ input[type="range"]::-webkit-slider-thumb {
     text-decoration:line-through;
 }
 
+.kifliNameFix:hover
+{
+    text-decoration:line-through;
+}
+
 .nameDiv
 {
     text-align: center;
@@ -171,4 +179,58 @@ input[type="range"]::-webkit-slider-thumb {
 .name
 {
     height: min-content;
+}
+
+.mentButton
+{
+    background-color: blueviolet !important; 
+    color: white !important;
+}
+
+
+.infoBtn
+{
+    border: 2px solid blueviolet !important;
+    color: blueviolet !important;
+    font-weight: 600 !important;
+}
+
+.DialogModal {
+    border: none;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 40%;
+}
+.toast
+{
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    z-index: 1000;
+}
+/* gomb bevás, takker, kifli */
+.buttonBTK
+{
+    width: 40px;
+    height: 40px;
+}
+
+.purple-shadow:focus
+{
+    box-shadow: 0 0 0 0.5px #fff, 0 0 0 0.3rem rgb(151, 75, 222) !important;
+}
+
+
+.red-shadow:focus
+{
+    box-shadow: 0 0 0 0.5px #fff, 0 0 0 0.3rem red !important;
 }
