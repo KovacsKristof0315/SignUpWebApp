@@ -129,12 +129,7 @@ function TablaFeltolt(name, start, end) {
     td.classList.add("text-center");
     let deleteButton = document.createElement("button");
     deleteButton.type = "button";
-<<<<<<< HEAD
     deleteButton.classList.add("btn", "btn-danger");
-=======
-    deleteButton.className = "btn btn-danger"
-    deleteButton.value = "X";
->>>>>>> 7efa30f6cdd10b65af293708271e12075b71cfc6
 
     let iconImg = document.createElement("img");
     iconImg.src = "Icons/trash-can-svgrepo-com.svg";
