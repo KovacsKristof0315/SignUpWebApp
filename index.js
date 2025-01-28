@@ -451,7 +451,7 @@ window.addEventListener("load", () => {
 
     setWeek(today);
     setKifli();
-    if (weekIndex >= 0 && weekIndex <= 12) {
+    if (weekIndex >= 0 && weekIndex <= 13) {
         titleElement.innerText = nyitasLista[weekIndex] + " Nyitás";
     }
     if(today.getDay() === 0 && today.getHours() === 22 && today.getMinutes() === 0 && today.getSeconds() === 0)

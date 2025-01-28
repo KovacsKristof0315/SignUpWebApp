@@ -11,6 +11,7 @@ const nyitasLista = [
     "Burrito",
     "Palacsinta",
     "HotDog",
+    "HotDog",
     "Hamburger",
     "Burrito",
     "Palacsinta",
