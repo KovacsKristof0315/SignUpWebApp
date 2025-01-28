@@ -158,6 +158,10 @@ function TablaFeltolt(name, start, end) {
     dataMatrix.push(row);
 }
 
+nameElement.addEventListener("focus", () => {
+    nameElement.classList.add("purple-shadow");
+    nameElement.classList.remove("red-shadow");
+})
 async function getNyitasData()
 {
     try 
