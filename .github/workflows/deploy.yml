@@ -19,7 +19,10 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
+          server-dir: ./
           protocol: ftp
+          dry-run: false
+          dangerous-clean-slate: true # ⚠️ Deletes all files before upload
           exclude: |
             **/.git*
             **/.github*
