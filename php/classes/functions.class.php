@@ -33,13 +33,8 @@ class Function_bolyai
         
         $NyitasStorage = new Storage(new JsonIO('nyitas.json'), false);
         $nyitok = $NyitasStorage->findAll();
-        $unique = true;
-        foreach ($nyitok as $nyito)
-        {
-            if ($nyito->name == $name) {
-                $unique = false;
-            }
-        }
+        
+        $unique = $this->unique($nyitok, $name, "name");
         if (!$unique) {
             $valasz = array('response' => "fail-unique");
             return json_encode($valasz, JSON_UNESCAPED_UNICODE);
@@ -55,6 +50,7 @@ class Function_bolyai
         return json_encode($response, JSON_UNESCAPED_UNICODE);
         
     }
+
 
     public function deleteNyitasData($erkezettAdatok)
     {
@@ -81,18 +77,26 @@ class Function_bolyai
         if (strlen($erkezettAdatok->name) == 0) {
             $valasz = array('response' => "fail");
             return json_encode($valasz, JSON_UNESCAPED_UNICODE);
-        } else
-        {
-            $BevasStorage = new Storage(new JsonIO('bevas.json'), false);
-    
-            
-            $BevasStorage->add([
-                "name" => $erkezettAdatok->name,
-            ]);
-    
-            $response = array('response' => "success");
-            return json_encode($response, JSON_UNESCAPED_UNICODE);   
+        } 
+
+
+        $BevasStorage = new Storage(new JsonIO('bevas.json'), false);
+        $bevasozok = $BevasStorage->findAll();
+
+        $unique = $this->unique($bevasozok, $erkezettAdatok->name, "name");
+        if (!$unique) {
+            $valasz = array('response' => "fail-unique");
+            return json_encode($valasz, JSON_UNESCAPED_UNICODE);
         }
+
+        
+        $BevasStorage->add([
+            "name" => $erkezettAdatok->name,
+        ]);
+
+        $response = array('response' => "success");
+        return json_encode($response, JSON_UNESCAPED_UNICODE);   
+        
     }
 
     public function deleteBevas($erkezettAdatok)
@@ -120,16 +124,25 @@ class Function_bolyai
         if (strlen($erkezettAdatok->name) == 0) {
             $valasz = array('response' => "fail");
             return json_encode($valasz, JSON_UNESCAPED_UNICODE);
-        } else
-        {
-            $TakkerStorage = new Storage(new JsonIO('takker.json'), false);
-            $TakkerStorage->add([
-                "name" => $erkezettAdatok->name,
-            ]);
-    
-            $response = array('response' => "success");
-            return json_encode($response, JSON_UNESCAPED_UNICODE);   
+        } 
+
+
+        $TakkerStorage = new Storage(new JsonIO('takker.json'), false);
+        $takkerosok = $TakkerStorage->findAll();
+
+        $unique = $this->unique($takkerosok, $erkezettAdatok->name, "name");
+        if (!$unique) {
+            $valasz = array('response' => "fail-unique");
+            return json_encode($valasz, JSON_UNESCAPED_UNICODE);
         }
+
+        $TakkerStorage->add([
+            "name" => $erkezettAdatok->name,
+        ]);
+
+        $response = array('response' => "success");
+        return json_encode($response, JSON_UNESCAPED_UNICODE);   
+        
     }
     
 
@@ -158,17 +171,23 @@ class Function_bolyai
         if (strlen($erkezettAdatok->name) == 0) {
             $valasz = array('response' => "fail");
             return json_encode($valasz, JSON_UNESCAPED_UNICODE);
-        } else
-        {
-            $KifliStorage = new Storage(new JsonIO('kifli.json'), false);
+        } 
 
-        
-            $KifliStorage->add([
-                "name" => $erkezettAdatok->name,
-            ]);
-            $response = array('response' => "success");
-            return json_encode($response, JSON_UNESCAPED_UNICODE);   
+
+        $KifliStorage = new Storage(new JsonIO('kifli.json'), false);
+        $kiflisek = $KifliStorage->findAll();
+
+        $unique = $this->unique($kiflisek, $erkezettAdatok->name, "name");
+        if (!$unique) {
+            $valasz = array('response' => "fail-unique");
+            return json_encode($valasz, JSON_UNESCAPED_UNICODE);
         }
+
+        $KifliStorage->add([
+            "name" => $erkezettAdatok->name,
+        ]);
+        $response = array('response' => "success");
+        return json_encode($response, JSON_UNESCAPED_UNICODE);   
     }
 
     public function deleteKifli($erkezettAdatok)
@@ -181,6 +200,18 @@ class Function_bolyai
     }
 
     //DeleteAll
+    public function deleteAllData()
+    {
+        $valasz = array(
+            'takker' => $this->deleteFileData("takker.json"),
+            'bevas' => $this->deleteFileData("bevas.json"),
+            'nyitas' => $this->deleteFileData("nyitas.json")
+        );
+        
+        return json_encode($valasz, JSON_UNESCAPED_UNICODE);
+    }
+
+    //private functions
     private function deleteFileData($file) {
         if (file_exists($file)) {
             
@@ -200,17 +231,15 @@ class Function_bolyai
         return $valasz;
     }
     
-    public function deleteAllData()
-    {
-        $valasz = array(
-            'takker' => $this->deleteFileData("takker.json"),
-            'bevas' => $this->deleteFileData("bevas.json"),
-            'nyitas' => $this->deleteFileData("nyitas.json")
-        );
-        
-        return json_encode($valasz, JSON_UNESCAPED_UNICODE);
+    private function unique($list, $searchedItem, $searchedObject){
+        foreach ($list as $item)
+        {
+            if ($item->$searchedObject == $searchedItem) {
+                return false;
+            }
+        }
+        return true;
     }
-
 
 }
 ?>

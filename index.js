@@ -70,7 +70,28 @@ async function uploadData(datas, type) {
     }
 }
 
-
+//user inform
+function updateUserInform(response, elementName, type) {
+    if (response.response == "success") {
+        showToast("Sikeres" + type +  "adatrögzítés ✅");
+        elementName.classList.add("purple-shadow");
+        elementName.classList.remove("red-shadow");
+        return true;
+    }
+    else if(response.response == "fail-unique")
+    {
+        showToast("Sikeretelen " + type +  " adatrögzítés ❌ már létező a név");
+        elementName.focus();
+        elementName.classList.remove("purple-shadow");
+        elementName.classList.add("red-shadow");
+    } else
+    {
+        showToast("Sikeretelen " + type +  " adatrögzítés ❌");
+        elementName.focus();
+        elementName.classList.remove("purple-shadow");
+        elementName.classList.add("red-shadow");
+    }
+}
 
 //Nyitás
 mentElement.addEventListener("click", async ()  =>  {
@@ -78,27 +99,13 @@ mentElement.addEventListener("click", async ()  =>  {
 
     let response = await uploadData(datas, "NyitasData");
 
-    if (response.response == "success") {
-        showToast("Sikeres nyitás adatrögzítés ✅");
+    if (updateUserInform(response, nameElement, "nyitás")) {
         TablaFeltolt(nameElement.value, priceInputvalue[0].value, priceInputvalue[1].value)
         nameElement.value = "";
-        nameElement.classList.add("purple-shadow");
-        nameElement.classList.remove("red-shadow");
-    }
-    else if(response.response == "fail-unique")
-    {
-        showToast("Sikeretelen nyitás adatrögzítés ❌ már létező a név");
-        nameElement.focus();
-        nameElement.classList.remove("purple-shadow");
-        nameElement.classList.add("red-shadow");
-    } else
-    {
-        showToast("Sikeretelen nyitás adatrögzítés ❌");
-        nameElement.focus();
-        nameElement.classList.remove("purple-shadow");
-        nameElement.classList.add("red-shadow");
     }
 })
+
+
 
 let weekIndex = -1;
 let dataMatrix = [];
@@ -133,7 +140,6 @@ function TablaFeltolt(name, start, end) {
 
     let iconImg = document.createElement("img");
     iconImg.src = "Icons/trash-can-svgrepo-com.svg";
-    iconImg.classList.add("img-fluid");
 
     deleteButton.appendChild(iconImg);
 
@@ -187,27 +193,15 @@ for (let i = 0; i < bevasNameButtons.length; i++) {
     bevasNameButtons[i].addEventListener("click", async () => {
         let datas = { "name" : bevasNames[i].value }
         let response = await uploadData(datas, "Bevas");
-        if (response.response == "success") {
-            showToast("Sikeres bevás adatrögzítés ✅");
-            
 
+        if (updateUserInform(response, bevasNames[i], "bevás")) {
             bevasNameFix[i].style.display = "inline";
             bevasNameFix[i].innerHTML += `<span class="align-middle">${bevasNames[i].value}</span>`;
             bevasNameFix[i].innerHTML += `<button type="button" class="btn btn-danger float-end fw-bolder buttonBTK">X</button>`;
             
             bevasNames[i].style.display="none";
             bevasNameButtons[i].style.display="none";
-            bevasNames[i].classList.add("purple-shadow");
-            bevasNames[i].classList.remove("red-shadow");
         }
-        else
-        {
-            showToast("Sikeretelen bevás adatrögzítés ❌");
-            bevasNames[i].focus();
-            bevasNames[i].classList.remove("purple-shadow");
-            bevasNames[i].classList.add("red-shadow");
-        }
-        
     })
     
 }
@@ -275,24 +269,13 @@ for (let i = 0; i < takkerNameButtons.length; i++) {
     takkerNameButtons[i].addEventListener("click", async () => {
         let datas = { "name" : takkerNames[i].value }
         let response = await uploadData(datas, "Takker");
-        if (response.response == "success") {
-            showToast("Sikeres bevás adatrögzítés ✅");
-            
+
+        if (updateUserInform(response, takkerNames[i], "takker")) {
             takkerNameFix[i].style.display = "inline";
             takkerNameFix[i].innerHTML += `<span class="align-middle">${takkerNames[i].value}</span>`;
             takkerNameFix[i].innerHTML += `<button type="button" class="btn btn-danger float-end fw-bolder buttonBTK">X</button>`;
             takkerNames[i].style.display="none";
             takkerNameButtons[i].style.display="none";
-
-            takkerNames[i].classList.add("purple-shadow");
-            takkerNames[i].classList.remove("red-shadow");
-        }
-        else
-        {
-            showToast("Sikeretelen bevás adatrögzítés ❌");
-            takkerNames[i].focus();
-            takkerNames[i].classList.remove("purple-shadow");
-            takkerNames[i].classList.add("red-shadow");
         }
     })
     
@@ -363,25 +346,13 @@ for (let i = 0; i < kifliNameButtons.length; i++) {
     kifliNameButtons[i].addEventListener("click", async () => {
         let datas = { "name" : kifliNames[i].value }
         let response = await uploadData(datas, "Kifli");
-        if (response.response == "success") {
-            showToast("Sikeres kifli adatrögzítés ✅");
-            
+
+        if (updateUserInform(response, kifliNames[i], "takker")) {
             kifliNameFix[i].style.display = "inline";
             kifliNameFix[i].innerHTML += `<span class="align-middle">${kifliNames[i].value}</span>`;
             kifliNameFix[i].innerHTML += `<button type="button" class="btn btn-danger float-end fw-bolder buttonBTK">X</button>`;
-
             kifliNames[i].style.display="none";
             kifliNameButtons[i].style.display="none";
-
-            kifliNames[i].classList.add("purple-shadow");
-            kifliNames[i].classList.remove("red-shadow");
-        }
-        else
-        {
-            kifliNames[i].focus();
-            kifliNames[i].classList.remove("purple-shadow");
-            kifliNames[i].classList.add("red-shadow");
-            showToast("Sikeretelen kifli adatrögzítés ❌");
         }
     })
     
