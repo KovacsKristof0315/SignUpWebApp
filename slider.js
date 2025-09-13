@@ -12,7 +12,7 @@ for (let i = 0; i < priceInputvalue.length; i++) {
             minp = 0;
         }
 
-        if (maxp > 21) {
+        if (maxp > 22) {
             alert("maximum price cannot be greater than 21");
             priceInputvalue[1].value = 21;
             maxp = 21;

@@ -40,40 +40,11 @@ const priceInputvalue =
 
 
 
-//Base delete function
-async function deleteData(name, type) {
-    try 
-    {
-        let datas = { "name" : name }
-        let eredmeny = await fetch('./php/index.php/delete' + type, {method: 'POST', body: JSON.stringify(datas)});
-        let response = await eredmeny.json();
-        return response;
-    } 
-    catch (error) 
-    {
-      console.log(error);  
-    }
-}
-
-//Base upload function
-async function uploadData(datas, type) {
-    try 
-    {
-        let eredmeny = await fetch('./php/index.php/upload' + type, {method: 'POST', body: JSON.stringify(datas)});
-        let response = await eredmeny.json();
-        return response;
-
-    } 
-    catch (error) 
-    {
-      console.log(error);  
-    }
-}
-
 //user inform
 function updateUserInform(response, elementName, type) {
     if (response.response == "success") {
-        showToast("Sikeres" + type +  "adatrögzítés ✅");
+        type = type.trim();
+        showToast("Sikeres " + type +  " adatrögzítés ✅");
         elementName.classList.add("purple-shadow");
         elementName.classList.remove("red-shadow");
         return true;
@@ -120,7 +91,7 @@ function TablaFeltolt(name, start, end) {
     tr.appendChild(nametd);
     for (let i = 14; i < 22; i++) {
         let td = document.createElement("td");
-        if (i <= end && i >= start) {
+        if (i < end && i >= start) {
             td.classList.add("marked");
             row.push(1);
         }
@@ -168,6 +139,7 @@ nameElement.addEventListener("focus", () => {
     nameElement.classList.add("purple-shadow");
     nameElement.classList.remove("red-shadow");
 })
+
 async function getNyitasData()
 {
     try 
@@ -186,234 +158,37 @@ async function getNyitasData()
     }
 }
 
-//bevás
+/*====================================================
+BEVÁS
+====================================================*/
 //upload
-for (let i = 0; i < bevasNameButtons.length; i++) {
-    bevasNameFix[i].style.display = "none";
-    bevasNameButtons[i].addEventListener("click", async () => {
-        let datas = { "name" : bevasNames[i].value }
-        let response = await uploadData(datas, "Bevas");
-
-        if (updateUserInform(response, bevasNames[i], "bevás")) {
-            bevasNameFix[i].style.display = "inline";
-            bevasNameFix[i].innerHTML += `<span class="align-middle">${bevasNames[i].value}</span>`;
-            bevasNameFix[i].innerHTML += `<button type="button" class="btn btn-danger float-end fw-bolder buttonBTK">X</button>`;
-            
-            bevasNames[i].style.display="none";
-            bevasNameButtons[i].style.display="none";
-        }
-    })
-    
-}
+configureUploadButtons(bevasNameButtons, bevasNameFix, bevasNames, "Bevas");
 
 //delete
-for (let i = 0; i < bevasNameFix.length; i++) {
-    bevasNameFix[i].addEventListener("click", async () => {
-        let response = await deleteData(bevasNames[i].value, "Bevas");
-        if (response.response == "success") {
-            showToast("Sikeres bevás adattörlés ✅");
-            
-            bevasNameFix[i].style.display = "none";
-            bevasNameFix[i].innerText = "";
-            bevasNames[i].value="";
-            bevasNames[i].style.display="inline";
-            bevasNameButtons[i].style.display="inline";
+configureDeleteButtons(bevasNameButtons, bevasNameFix, bevasNames, "Bevas");
 
-        }
-        else
-        {
-            showToast("Sikeretelen bevás adattörlés ❌");
-        }
-    })
-    
-}
 
-for (let i = 0; i < bevasNames.length; i++) {
-    bevasNames[i].addEventListener("focus", () => {
-        bevasNames[i].classList.add("purple-shadow");
-        bevasNames[i].classList.remove("red-shadow");
-    })
-    
-}
 
-async function getBevas() {
-    try 
-    {
-        let results = await fetch('./php/index.php/getBevas')
-        datas = await results.json();
-        
-        let i=0;
-        for (const item in datas) {
-            bevasNameFix[i].style.display = "inline";
-            bevasNameFix[i].innerHTML += `<span class="align-middle">${datas[item].name}</span>`;
-            bevasNameFix[i].innerHTML += `<button type="button" class="btn btn-danger float-end fw-bolder buttonBTK">X</button>`;
-            bevasNames[i].style.display="none";
-            bevasNameButtons[i].style.display="none";
-            bevasNameFix[i].addEventListener("click", () =>
-            {
-                deleteData(datas[item].name, "Bevas");
-            })
-            i++;
-        }
-    } 
-    catch (error) 
-    {
-        console.log(error);       
-    }
-}
-
-// takker
+/*====================================================
+TAKKER
+====================================================*/
 //upload
-for (let i = 0; i < takkerNameButtons.length; i++) {
-    takkerNameFix[i].style.display = "none";
-    takkerNameButtons[i].addEventListener("click", async () => {
-        let datas = { "name" : takkerNames[i].value }
-        let response = await uploadData(datas, "Takker");
-
-        if (updateUserInform(response, takkerNames[i], "takker")) {
-            takkerNameFix[i].style.display = "inline";
-            takkerNameFix[i].innerHTML += `<span class="align-middle">${takkerNames[i].value}</span>`;
-            takkerNameFix[i].innerHTML += `<button type="button" class="btn btn-danger float-end fw-bolder buttonBTK">X</button>`;
-            takkerNames[i].style.display="none";
-            takkerNameButtons[i].style.display="none";
-        }
-    })
-    
-}
+configureUploadButtons(takkerNameButtons, takkerNameFix, takkerNames, "Takker");
 
 //delete
-for (let i = 0; i < takkerNameFix.length; i++) {
-    takkerNameFix[i].addEventListener("click", async () => {
-        let response = await deleteData(takkerNames[i].value, "Takker");
-        if (response.response == "success") {
-            showToast("Sikeres takker adattörlés ✅");
-            
-            takkerNameFix[i].style.display = "none";
-            takkerNameFix[i].innerText = "";
-            takkerNames[i].value="";
-            takkerNames[i].style.display="inline";
-            takkerNameButtons[i].style.display="inline";
+configureDeleteButtons(takkerNameButtons, takkerNameFix, takkerNames, "Takker");
 
-        }
-        else
-        {
-            showToast("Sikeretelen takker adattörlés ❌");
-        }
-    })
-    
-}
 
-for (let i = 0; i < takkerNames.length; i++) {
-    takkerNames[i].addEventListener("focus", () => {
-        takkerNames[i].classList.add("purple-shadow");
-        takkerNames[i].classList.remove("red-shadow");
-    })
-    
-}
-async function getTakker() {
-    try 
-    {
-        let results = await fetch('./php/index.php/getTakker')
-        let datas = await results.json();
-        
-        let i=0;
-        for (const item in datas) {
-            takkerNameFix[i].style.display = "inline";
-
-            takkerNameFix[i].innerHTML += `<span class="align-middle">${datas[item].name}</span>`;
-            takkerNameFix[i].innerHTML += `<button type="button" class="btn btn-danger float-end fw-bolder buttonBTK">X</button>`;
-
-            takkerNames[i].style.display="none";
-            takkerNameButtons[i].style.display="none";
-            
-            takkerNameFix[i].addEventListener("click", () =>
-            {
-                deleteData(datas[item].name, "Takker");
-            })
-            i++;
-        }
-    } 
-    catch (error) 
-    {
-        console.log(error);       
-    }
-}
-
-// kifli
+/*====================================================
+KIFLI
+====================================================*/
 //Upload
-for (let i = 0; i < kifliNameButtons.length; i++) {
-    kifliNameFix[i].style.display = "none";
-    kifliNameButtons[i].addEventListener("click", async () => {
-        let datas = { "name" : kifliNames[i].value }
-        let response = await uploadData(datas, "Kifli");
+configureUploadButtons(kifliNameButtons, kifliNameFix, kifliNames, "Kifli");
 
-        if (updateUserInform(response, kifliNames[i], "takker")) {
-            kifliNameFix[i].style.display = "inline";
-            kifliNameFix[i].innerHTML += `<span class="align-middle">${kifliNames[i].value}</span>`;
-            kifliNameFix[i].innerHTML += `<button type="button" class="btn btn-danger float-end fw-bolder buttonBTK">X</button>`;
-            kifliNames[i].style.display="none";
-            kifliNameButtons[i].style.display="none";
-        }
-    })
-    
-}
 
 //Delete
-for (let i = 0; i < kifliNameFix.length; i++) {
-    kifliNameFix[i].addEventListener("click", async () => {
-        let response = await deleteData(kifliNames[i].value, "Kifli");
-        
-        if (response.response == "success") {
-            showToast("Sikeres kifli adattörlés ✅");
-            
-            kifliNameFix[i].style.display = "none";
-            kifliNameFix[i].innerText = "";
-            kifliNames[i].value="";
-            kifliNames[i].style.display="inline";
-            kifliNameButtons[i].style.display="inline";
-        }
-        else
-        {
-            showToast("Sikeretelen kifli adattörlés ❌");
-        }
-    })
-    
-}
 
-for (let i = 0; i < kifliNames.length; i++) {
-    kifliNames[i].addEventListener("focus", () => {
-        kifliNames[i].classList.add("purple-shadow");
-        kifliNames[i].classList.remove("red-shadow");
-    })
-    
-}
-
-async function getKifli() {
-    try 
-    {
-        let results = await fetch('./php/index.php/getKifli')
-        let datas = await results.json();
-        
-        let i=0;
-        for (const item in datas) {
-            kifliNameFix[i].style.display = "inline";
-            kifliNameFix[i].innerHTML += `<span class="align-middle">${datas[item].name}</span>`;
-            kifliNameFix[i].innerHTML += `<button type="button" class="btn btn-danger float-end fw-bolder buttonBTK">X</button>`;
-            kifliNames[i].style.display="none";
-            kifliNameButtons[i].style.display="none";
-            
-            kifliNameFix[i].addEventListener("click", () =>
-            {
-                deleteData(datas[item].name, "Kifli");
-            })
-            i++;
-        }
-    } 
-    catch (error) 
-    {
-        console.log(error);       
-    }
-}
+configureDeleteButtons(kifliNameButtons, kifliNameFix, kifliNames, "Kifli")
 
 
 //Load esemény
@@ -431,8 +206,9 @@ window.addEventListener("load", () => {
     }
     
     getNyitasData();
-    getBevas();
-    getTakker();
+    getData(bevasNameButtons, bevasNameFix, bevasNames, "Bevas")
+    getData(takkerNameButtons, takkerNameFix, takkerNames, "Takker")
+
 })
 
 function setWeek(today) {
@@ -443,7 +219,8 @@ function setWeek(today) {
 }
 
 function setKifli() {
-    let actData = Datas.find(x => x.name == nyitasLista[weekIndex]);
+    let actData = Datas.find(x => x.name == nyitasLista[weekIndex]) || 0;
+    
     if(actData.kifli)
     {
         kifliContainer.style.display = "inline";
@@ -460,7 +237,7 @@ function setKifli() {
                 kifliNames[i].placeholder = "Kifli név"
             }
         }
-        getKifli();
+        getData(kifliNameButtons, kifliNameFix, kifliNames, "Kifli")
     }
     else
     {
@@ -483,22 +260,6 @@ async function deleteAllData() {
     
 }
 
-function getDateWeek(date) {
-    const currentDate = 
-        (typeof date === 'object') ? date : new Date();
-    const januaryFirst = 
-        new Date(currentDate.getFullYear(), 0, 1);
-    const daysToNextMonday = 
-        (januaryFirst.getDay() === 1) ? 0 : 
-        (7 - januaryFirst.getDay()) % 7;
-    const nextMonday = 
-        new Date(currentDate.getFullYear(), 0, 
-        januaryFirst.getDate() + daysToNextMonday);
-
-    return (currentDate < nextMonday) ? 52 : 
-    (currentDate > nextMonday ? Math.ceil(
-    (currentDate - nextMonday) / (24 * 3600 * 1000) / 7) : 1)+1;
-}
 
 //Modal
 infoButton.addEventListener("click", () => {
@@ -519,6 +280,7 @@ infoButton.addEventListener("click", () => {
     let scOpt = actData.optSec;
 
     tableModalElement.innerHTML = "";
+    console.log(sections);
     for (let i = 0; i < sections.length; i++) {
         let tr = document.createElement("tr");
 
@@ -563,15 +325,3 @@ dialog.addEventListener("click", (event) => {
 closeButton.addEventListener("click", () => {
     dialog.close();
 });
-
-
-//toast (válasz)
-function showToast(message) {
-    const toast = document.getElementById("toast");
-    toast.textContent = message; // Set custom message
-    toast.style.display = "block"; // Show toast
-
-    setTimeout(() => {
-      toast.style.display = "none";
-    }, 3000);
-}

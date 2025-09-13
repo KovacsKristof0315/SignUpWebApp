@@ -1,7 +1,7 @@
 /*Ezt kell szerkeszteni! */
 
 //A félév első nyitásának dátuma, (formátum: éééé-hh-nn)
-const elsoNyitasNap = "2025-01-27";
+const elsoNyitasNap = "2025-09-10";
 
 
 //A félév nyitásainak sorrendje, ebben a formátumban kötelező!
