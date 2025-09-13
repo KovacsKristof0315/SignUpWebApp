@@ -117,7 +117,7 @@ function configureDeleteButtons(NameButtons, NameFix, Name, type)
             let response = await deleteData(kifliNames[i].value, type);
             
             if (response.response == "success") {
-                showToast("Sikeres kifli adattörlés ✅");
+                showToast("Sikeres " + type.trim() + " adattörlés ✅");
                 
                 NameFix[i].style.display = "none";
                 NameFix[i].innerText = "";
